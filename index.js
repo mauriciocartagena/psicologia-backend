@@ -1,12 +1,19 @@
 const express = require('express');
-//Usar entornos de desarrollo
 require('dotenv').config();
+
+
+const { dbConnection } = require('./database/config');
+//Usar entornos de desarrollo
 
 console.log( process.env );
 
 // crear el servidor de express
 
 const app = express();
+
+//BASE DE DATOS
+
+dbConnection();
 
 //Directorio Público
 app.use( express.static('public') );
