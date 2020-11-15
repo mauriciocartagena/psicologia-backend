@@ -1,19 +1,20 @@
 const express = require('express');
 require('dotenv').config();
+require('./database/config');
 
-
-const { dbConnection } = require('./database/config');
 //Usar entornos de desarrollo
 
-console.log( process.env );
+// console.log( process.env );
+
 
 // crear el servidor de express
+
 
 const app = express();
 
 //BASE DE DATOS
 
-dbConnection();
+
 
 //Directorio Público
 app.use( express.static('public') );
@@ -24,6 +25,7 @@ app.use( express.json() );
 
 //Rutas
 app.use('/api/auth', require('./routes/auth'));
+app.use('/api/users', require('./routes/users'));
 
 //TODO CRUD : Eventos
 
