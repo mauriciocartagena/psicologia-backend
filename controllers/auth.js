@@ -7,7 +7,7 @@ const verUsuario = async ( req, res = response ) => {
 
     res.status( 201 ).json({
         ok:true,
-        msg: 'lista de personas',
+        msg: 'lista de usuarios',
         personas:persona
     });
 };

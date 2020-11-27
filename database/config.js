@@ -12,6 +12,8 @@ const { RespuestaSimpleModel } = require("../models/RespuestaSimple");
 const { PreguntasFormasModel } = require('../models/PreguntasFormas');
 const { TestFormasModel } = require('../models/TestFormas');
 const { RespuestasFormasModel } = require("../models/RespuestasFormas");
+const { TestDisponiblesModel } = require("../models/TestDisponibles");
+const { InstitucionModel } = require("../models/Institucion");
 
 
 
@@ -40,6 +42,9 @@ const RespuestaSimple = RespuestaSimpleModel( sequelize );
 const PreguntasFormas = PreguntasFormasModel( sequelize );
 const TestFormas = TestFormasModel( sequelize );
 const RespuestasFormas = RespuestasFormasModel( sequelize );
+
+const Institucion = InstitucionModel( sequelize );
+const TestDisponibles = TestDisponiblesModel( sequelize );
 
 
 
@@ -77,6 +82,18 @@ RespuestasFormas.belongsTo( Usuario, {
     as:"usuarios"
 });
 
+Usuario.belongsTo( Institucion, {
+    foreignKey:"id_institucion",
+    as:"institucions"
+});
+
+TestDisponibles.belongsTo( Usuario, {
+    foreignKey:"persona_id",
+    as:"usuarios"
+});
+// InstitucionModel
+// TestDisponiblesModel
+
 
 
 // Es requerida
@@ -98,50 +115,3 @@ module.exports = {
     Persona,
     Usuario
 }
-
-
-
-
-
-
-
-
-
-
-
-// const { Sequelize } = require('sequelize');
-
-// const PersonaModel = require("../models/Persona");
-
-// const dbConnection = () => {
-
-//     const sequelize = new Sequelize (
-//         process.env.DB_DATABASE,
-//         process.env.DB_USER, 
-//         process.env.DB_PASSWORD,  {
-//             host        : process.env.DB_CNN,
-//             port        : process.env.DB_PORT,
-//             dialect     : process.env.DB_DIALECT,
-//             socketPath: "/Applications/MAMP/tmp/mysql/mysql.sock"
-//     });
-
-//     sequelize
-//     .authenticate()
-//     .then(() => {
-//         console.log("Connection has been established successfully.")
-//         const Persona = PersonaModel( sequelize );
-//         sequelize.sync( { force : false} ).then(()=>{
-//             console.log("Se creo la tabla");
-//         }).catch(() {
-//             console.log("error")
-//         })
-
-//     })
-//     .catch(err => {
-//         console.error("Unable to connect to the database:", err)
-//     });
-
-// }
-// module.exports = {
-//     dbConnection
-// }
