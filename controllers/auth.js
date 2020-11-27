@@ -25,12 +25,19 @@ const crearUsuario = async ( req, res = response ) => {
     
     const { username, email, dni, password } = req.body;
     
+    const personaDni      =  await Persona.findOne({ 
+        where:{ dni : dni }
+    });
+    const personaUsername =  await Usuario.findOne({ 
+        where:{ username : username }
+    });
+    const PersonaEmail    =  await Persona.findOne({ 
+        where:{ email : email }
+    });
+
     
     try {
         
-        let personaDni      =  await Persona.findOne({ dni });
-        let personaUsername =  await Persona.findOne({ username });
-        let PersonaEmail    =  await Persona.findOne({ email });
         
         if ( personaDni || personaUsername || PersonaEmail) {
             
@@ -59,11 +66,13 @@ const crearUsuario = async ( req, res = response ) => {
             ok:true,
             msg: 'register',
         });
-
-        
         
     } catch (error) {
-        console.log( error )
+        console.log(error);
+        res.status(201).json({
+            ok:true,
+            msg:'Por favor hable con el Administrador',
+        });
     }
 };
 

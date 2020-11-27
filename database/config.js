@@ -110,5 +110,14 @@ sequelize.sync({ force: true }).then(() => {
 
 module.exports = {
     Persona,
-    Usuario
+    Usuario,
+    TestSimple,
+    Categoria,
+    PreguntaSimple,
+    RespuestaSimple,
+    PreguntasFormas,
+    TestFormas,
+    RespuestasFormas,
+    Institucion,
+    TestDisponibles
 }
