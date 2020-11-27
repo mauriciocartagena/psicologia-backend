@@ -91,9 +91,6 @@ TestDisponibles.belongsTo( Usuario, {
     foreignKey:"persona_id",
     as:"usuarios"
 });
-// InstitucionModel
-// TestDisponiblesModel
-
 
 
 // Es requerida

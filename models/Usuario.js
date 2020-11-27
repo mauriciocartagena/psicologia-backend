@@ -8,8 +8,14 @@ const UsuarioModel = ( sequelize ) => {
             type: DataTypes.INTEGER,
             primaryKey: true
         },
-        username: DataTypes.STRING,
-        password: DataTypes.STRING,
+        username: {
+            type: DataTypes.STRING(50),
+            allowNull: false,
+        },
+        password: {
+            type: DataTypes.STRING(30),
+            allowNull: false,
+        },
         last_session: DataTypes.DATE
 
     });

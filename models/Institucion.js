@@ -9,13 +9,41 @@ const InstitucionModel = ( sequelize ) => {
             primaryKey: true,
             autoIncrement: true, 
         },
-        nombre: DataTypes.STRING,
-        direccion: DataTypes.STRING,
-        celular: DataTypes.INTEGER,
-        telefono: DataTypes.STRING,
-        imei: DataTypes.STRING,
-        nit: DataTypes.STRING,
-        nombre_contacto: DataTypes.STRING
+        nombre: { 
+            type: DataTypes.STRING(250),
+            allowNull: false,
+            
+        },
+        direccion: { 
+            type: DataTypes.STRING(250),
+            allowNull: false,
+            
+        },
+        celular: { 
+            type: DataTypes.STRING(20),
+            allowNull: false,
+            
+        },
+        telefono: { 
+            type: DataTypes.STRING(50),
+            allowNull: false,
+            
+        },
+        imei: { 
+            type: DataTypes.STRING(30),
+            allowNull: false,
+            
+        },
+        nit: { 
+            type: DataTypes.STRING(20),
+            allowNull: false,
+            
+        },
+        nombre_contacto: { 
+            type: DataTypes.STRING(50),
+            allowNull: false,
+            
+        }
     });
 };
 

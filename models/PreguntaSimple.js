@@ -9,7 +9,7 @@ const PreguntaSimpleModel = ( sequelize ) => {
             primaryKey: true,
             autoIncrement: true
         },
-        pregunta: DataTypes.STRING,
+        pregunta: DataTypes.TEXT,
     });
 }
 

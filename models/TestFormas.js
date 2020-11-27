@@ -9,7 +9,10 @@ const TestFormasModel = ( sequelize ) => {
             primaryKey: true,
             autoIncrement: true
         },
-        nombre: DataTypes.STRING,
+        nombre: {
+            type: DataTypes.STRING(50),
+            allowNull: false,
+        },
     });
 }
 

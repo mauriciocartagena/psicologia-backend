@@ -9,7 +9,10 @@ const PreguntasFormasModel = ( sequelize ) => {
             primaryKey: true,
             autoIncrement: true
         },
-        nombre: DataTypes.STRING,
+        nombre: {
+            type: DataTypes.TEXT,
+            allowNull: false,
+        },
         pregunta: DataTypes.BLOB,
         op1:DataTypes.BLOB,
         op2:DataTypes.BLOB,

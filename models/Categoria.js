@@ -9,7 +9,11 @@ const CategoriaModel = ( sequelize ) => {
             primaryKey: true,
             autoIncrement: true
         },
-        nombre_categoria:DataTypes.STRING
+        nombre_categoria: {
+            type : DataTypes.STRING(20),
+            allowNull: false,
+        }
+
     });
 }
 

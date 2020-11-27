@@ -9,18 +9,50 @@ const PersonaModel = ( sequelize ) => {
             primaryKey: true,
             autoIncrement: true, 
         },
-        nombre: DataTypes.STRING,
-        primer_apellido: DataTypes.STRING,
-        segundo_apellido: DataTypes.STRING,
-        celular:DataTypes.STRING,
-        imei:DataTypes.STRING,
-        genero:DataTypes.STRING,
-        edad:DataTypes.INTEGER,
-        direccion:DataTypes.STRING,
-        padres_responsables:DataTypes.STRING,
-        dni: DataTypes.STRING,
-        fecha_nacimiento: DataTypes.DATE,
-        email: DataTypes.STRING  
+        nombre: {
+            type: DataTypes.STRING(30),
+            allowNull: false,
+        },
+        primer_apellido: {
+            type: DataTypes.STRING(30),
+            allowNull: false,
+        },
+        segundo_apellido: {
+            type: DataTypes.STRING(30),
+            allowNull: true,
+        },
+        celular: {
+            type: DataTypes.STRING(20),
+            allowNull: false,
+        },
+        imei: { 
+            type: DataTypes.STRING(30),
+            allowNull: false,
+        },
+        genero: {
+            type: DataTypes.STRING(10),
+            allowNull: false,
+        },
+        edad: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        direccion: {
+            type: DataTypes.STRING(250),
+            allowNull: false,
+        },
+        padres_responsables: {
+            type: DataTypes.STRING(150),
+            allowNull: false,
+        },
+        dni: {
+            type: DataTypes.STRING(20),
+            allowNull: false,
+        },
+        email: {
+            type: DataTypes.STRING(50),
+            allowNull: true,
+        }
     });
 };
 
