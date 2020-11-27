@@ -1,4 +1,5 @@
 const { response } = require('express');
+const bcryt = require('bcryptjs');
 const { Usuario } = require('../database/config');
 const { Persona } = require('../database/config');
 
@@ -21,24 +22,71 @@ const verUsuario = async ( req, res = response ) => {
 
 const crearUsuario = async ( req, res = response ) => { 
 
-    const { persona_id } =  await Persona.create( req.body );
+    
+    const { username, email, dni, password } = req.body;
+    
+    
+    try {
+        
+        let personaDni      =  await Persona.findOne({ dni });
+        let personaUsername =  await Persona.findOne({ username });
+        let PersonaEmail    =  await Persona.findOne({ email });
+        
+        if ( personaDni || personaUsername || PersonaEmail) {
+            
+            return res.status( 400 ).json({
+                ok:false,
+                msg:'El usuario ya existe'
+            });
+            
+        }
+        
+        //Encryptar contraseña
+        const { persona_id } =  await Persona.create( req.body );
+        
+        const salt = bcryt.genSaltSync();
+        
+        passwordEncryt = bcryt.hashSync( password, salt );
+        
 
-    const { username, password } = req.body;
-    //TODO Falta la institución
-    await Usuario.create( { 
-        persona_id, 
-        username,
-        password 
-    });
+        await Usuario.create( { 
+            persona_id, 
+            username,
+            password:passwordEncryt 
+        });
+    
+        res.status( 201 ).json({
+            ok:true,
+            msg: 'register',
+        });
 
-    res.status( 201 ).json({
-        ok:true,
-        msg: 'register',
-    });
+        
+        
+    } catch (error) {
+        console.log( error )
+    }
 };
+
 const modificarUsuario = async ( req, res = response ) => { 
 
     await Persona.update( req.body ,{
+        where:{ persona_id: req.body.persona_id }
+    }).then( ()=> { 
+        res.status( 200 ).json({
+            ok:true,
+            msg: 'update',
+        });
+    }).catch(()=> {
+        res.status( 400 ).json({
+            ok:true,
+            msg: 'error update',
+        });
+    });
+   
+};
+const modificarUser = async ( req, res = response ) => { 
+
+    await Usuario.update( req.body ,{
         where:{ persona_id: req.body.persona_id }
     }).then( ()=> { 
         res.status( 200 ).json({
@@ -65,6 +113,10 @@ const DeleteUsuario = async ( req, res = response ) => {
         msg: 'Eliminar',
     });
 };
+
+
+
+
 
 const loginUsuario = ( req, res = response ) => {
 
@@ -95,5 +147,6 @@ module.exports = {
     crearUsuario,
     verUsuario,
     modificarUsuario,
+    modificarUser,
     DeleteUsuario
 }
