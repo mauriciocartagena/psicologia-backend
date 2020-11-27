@@ -1,20 +1,35 @@
 const { response } = require('express');
+const { Usuario } = require('../database/config');
 const { Persona } = require('../database/config');
 
 const verUsuario = async ( req, res = response ) => { 
 
-   const persona = await Persona.findAll();
+    const persona =  await Persona.findAll({
+        include: [
+            { model: Usuario, as: 'usuarios',
+              attributes:['username','last_session','createdAt','updatedAt','id_institucion']
+            }
+        ]
+    });
 
     res.status( 201 ).json({
         ok:true,
         msg: 'lista de usuarios',
-        personas:persona
+        personas:  persona
     });
 };
 
 const crearUsuario = async ( req, res = response ) => { 
 
-    await Persona.create( req.body );
+    const { persona_id } =  await Persona.create( req.body );
+
+    const { username, password } = req.body;
+    //TODO Falta la institución
+    await Usuario.create( { 
+        persona_id, 
+        username,
+        password 
+    });
 
     res.status( 201 ).json({
         ok:true,
@@ -24,7 +39,7 @@ const crearUsuario = async ( req, res = response ) => {
 const modificarUsuario = async ( req, res = response ) => { 
 
     await Persona.update( req.body ,{
-        where:{ id: req.params.personId }
+        where:{ persona_id: req.body.persona_id }
     }).then( ()=> { 
         res.status( 200 ).json({
             ok:true,
@@ -42,7 +57,7 @@ const modificarUsuario = async ( req, res = response ) => {
 const DeleteUsuario = async ( req, res = response ) => { 
 
     await Persona.destroy({
-        where: { id: req.params.personId }
+        where: { persona_id: req.body.persona_id }
     });
 
     res.status( 201 ).json({

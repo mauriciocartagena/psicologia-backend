@@ -15,11 +15,14 @@ router.get('/usuarios', verUsuario);
 router.post(
     '/new',
      [  //middlewares
-        check( 'nombre', 'El nombre es obligatorio' ).not().isEmpty(),
-        check( 'primer_apellido', 'El Primer Apellido es obligatorio' ).not().isEmpty(),
-        check( 'dni', 'El Dni debe es obligatorio' ).not().isEmpty(),
-        check( 'fecha_nacimiento', 'La fecha de nacimiento es obligatorio' ).not().isEmpty().isDate(),
-        check( 'email', 'El email es obligatorio' ).not().isEmpty().isEmail(),
+        // check( 'nombre', 'El nombre es obligatorio' ).not().isEmpty(),
+        // check( 'primer_apellido', 'El Primer Apellido es obligatorio' ).not().isEmpty(),
+        // check( 'dni', 'El Dni debe es obligatorio' ).not().isEmpty(),
+        // check( 'fecha_nacimiento', 'La fecha de nacimiento es obligatorio' ).not().isEmpty().isDate(),
+        // check( 'email', 'El email es obligatorio' ).not().isEmpty().isEmail(),
+
+        check( 'username', 'El username es obligatorio' ).not().isEmpty(),
+        check( 'password', 'El password es obligatorio' ).not().isEmpty(),
         validarCampos
     ],
     crearUsuario );
