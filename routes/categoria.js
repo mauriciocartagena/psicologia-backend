@@ -1,14 +1,14 @@
 /*
-    Rutas de Usuarios / Categoria
+    Rutas de Categoria / Categoria
     host + /api/categoria
 */ 
 
-const { Router } = require( 'express' );
-const { check } = require('express-validator');
+const { Router }        = require( 'express' );
+const { check }         = require('express-validator');
 const { validarCampos } = require('../middlewares/validar-campos');
 const router = Router();
 
-const { mostrarCategoria, crearCategoria, updateCategoria } = require('../controllers/categoria');
+const { mostrarCategoria, crearCategoria, updateCategoria, deleteCategoria } = require('../controllers/categoria');
 
 
 router.get('/categorias', mostrarCategoria);
@@ -23,9 +23,18 @@ crearCategoria);
 router.put('/update',
     [
         check('nombre_categoria',"El nombre es requerido").not().isEmpty(),
+        check('id_categoria',"La categoria es requerido").not().isEmpty(),
         validarCampos
     ], 
 updateCategoria);
+
+router.delete('/delete',
+    [
+        check('id_categoria',"La categoria es requerido").not().isEmpty(),
+        validarCampos
+    ], 
+    deleteCategoria
+);
 
 // router.put(
 //         '/update',

@@ -1,22 +1,22 @@
+
 const { response } = require('express');
-const { Categoria } = require('../database/config');
+const { TestDisponibles } = require('../database/config');
 
+const mostrarTestDisponibles = async ( req, res = response ) => { 
 
-const mostrarCategoria = async ( req, res = response ) => { 
-
-    const categoria = await Categoria.findAll();
+    const testSimple = await TestDisponibles.findAll();
  
      res.status( 200 ).json({
          ok:true,
-         msg: 'lista de categorias',
-         categorias:categoria
+         msg: 'lista de test simples',
+         testSimples:testSimple
      });
 };
 
-const crearCategoria = async ( req, res = response ) => { 
+const crearTestDisponibles = async ( req, res = response ) => { 
     
-    const name = await Categoria.findOne({
-        where:{ nombre_categoria : req.body.nombre_categoria }
+    const name = await TestDisponibles.findOne({
+        where:{ persona_id : req.body.persona_id }
     });
     
     
@@ -25,10 +25,10 @@ const crearCategoria = async ( req, res = response ) => {
         if ( name ) {
             return res.status( 400 ).json({
                 ok:false,
-                msg: 'La categoria ya existe'
+                msg: 'La persona ya existe'
            });
         }
-        await Categoria.create( req.body );
+        await TestDisponibles.create( req.body );
             
         res.status( 200 ).json({
             ok:true,
@@ -44,11 +44,11 @@ const crearCategoria = async ( req, res = response ) => {
 
 };
 
-const updateCategoria = async ( req, res = response ) => {
+const updateTestDisponibles = async ( req, res = response ) => {
 
-    await Categoria.update( req.body, { 
+    await TestDisponibles.update( req.body, { 
 
-        where:{ id_categoria : req.body.id_categoria }
+        where:{ id_test_disponible : req.body.id_test_disponible }
 
     }).then( () => {
 
@@ -72,10 +72,12 @@ const updateCategoria = async ( req, res = response ) => {
 
 }
 
-const deleteCategoria = async ( req, res = response ) => {
+const deleteTestDisponibles = async ( req, res = response ) => {
 
-    await Categoria.destroy({
-        where:{ id_categoria: req.body.id_categoria  },
+    await TestDisponibles.destroy({ 
+
+        where:{ id_test_disponible : req.body.id_test_disponible }
+
     }).then( () => {
         res.status(200).json({
             ok:true,
@@ -91,8 +93,8 @@ const deleteCategoria = async ( req, res = response ) => {
 }
 
 module.exports = {
-    mostrarCategoria,
-    crearCategoria,
-    updateCategoria,
-    deleteCategoria
+   mostrarTestDisponibles,
+   crearTestDisponibles,
+   updateTestDisponibles,
+   deleteTestDisponibles
 }

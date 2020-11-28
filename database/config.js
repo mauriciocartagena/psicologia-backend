@@ -63,7 +63,7 @@ RespuestaSimple.belongsTo( PreguntaSimple, {
     as: "pregunta_simples",
 });
 RespuestaSimple.belongsTo( Usuario , {
-    foreignKey: "id_persona",
+    foreignKey: "persona_id",
     as: "usuarios",
 });
 

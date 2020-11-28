@@ -1,22 +1,21 @@
 const { response } = require('express');
-const { Categoria } = require('../database/config');
+const { Institucion } = require('../database/config');
 
+const mostrarInstituto = async ( req, res = response ) => { 
 
-const mostrarCategoria = async ( req, res = response ) => { 
-
-    const categoria = await Categoria.findAll();
+    const institucion = await Institucion.findAll();
  
      res.status( 200 ).json({
          ok:true,
-         msg: 'lista de categorias',
-         categorias:categoria
+         msg: 'lista de Institutos',
+         instituciones:institucion
      });
 };
 
-const crearCategoria = async ( req, res = response ) => { 
+const crearInstituto = async ( req, res = response ) => { 
     
-    const name = await Categoria.findOne({
-        where:{ nombre_categoria : req.body.nombre_categoria }
+    const name = await Institucion.findOne({
+        where:{ nombre : req.body.nombre }
     });
     
     
@@ -25,10 +24,10 @@ const crearCategoria = async ( req, res = response ) => {
         if ( name ) {
             return res.status( 400 ).json({
                 ok:false,
-                msg: 'La categoria ya existe'
+                msg: 'La institución ya existe'
            });
         }
-        await Categoria.create( req.body );
+        await Institucion.create( req.body );
             
         res.status( 200 ).json({
             ok:true,
@@ -44,11 +43,11 @@ const crearCategoria = async ( req, res = response ) => {
 
 };
 
-const updateCategoria = async ( req, res = response ) => {
+const updateInstituto = async ( req, res = response ) => {
 
-    await Categoria.update( req.body, { 
+    await Institucion.update( req.body, { 
 
-        where:{ id_categoria : req.body.id_categoria }
+        where:{ id_institucion : req.body.id_institucion }
 
     }).then( () => {
 
@@ -72,10 +71,12 @@ const updateCategoria = async ( req, res = response ) => {
 
 }
 
-const deleteCategoria = async ( req, res = response ) => {
+const deleteInstituto = async ( req, res = response ) => {
 
-    await Categoria.destroy({
-        where:{ id_categoria: req.body.id_categoria  },
+    await Institucion.destroy({
+
+        where:{ id_institucion : req.body.id_institucion }
+
     }).then( () => {
         res.status(200).json({
             ok:true,
@@ -91,8 +92,8 @@ const deleteCategoria = async ( req, res = response ) => {
 }
 
 module.exports = {
-    mostrarCategoria,
-    crearCategoria,
-    updateCategoria,
-    deleteCategoria
+    mostrarInstituto,
+    crearInstituto,
+    updateInstituto,
+    deleteInstituto
 }

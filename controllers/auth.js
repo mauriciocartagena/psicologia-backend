@@ -115,11 +115,16 @@ const DeleteUsuario = async ( req, res = response ) => {
 
     await Persona.destroy({
         where: { persona_id: req.body.persona_id }
-    });
-
-    res.status( 201 ).json({
-        ok:true,
-        msg: 'Eliminar',
+    }).then( ()=> { 
+        res.status( 200 ).json({
+            ok:true,
+            msg: 'delete',
+        });
+    }).catch(()=> {
+        res.status( 400 ).json({
+            ok:true,
+            msg: 'error delete',
+        });
     });
 };
 
