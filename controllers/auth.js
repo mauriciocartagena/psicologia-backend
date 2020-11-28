@@ -1,14 +1,16 @@
 const { response } = require('express');
-const bcryt = require('bcryptjs');
+const bcrypt = require('bcryptjs');
 const { Usuario } = require('../database/config');
 const { Persona } = require('../database/config');
+
+const { generarJWT } = require('../helpers/jwt');
 
 const verUsuario = async ( req, res = response ) => { 
 
     const persona =  await Persona.findAll({
         include: [
             { model: Usuario, as: 'usuarios',
-              attributes:['username','last_session','createdAt','updatedAt','id_institucion']
+              attributes:['username','last_session','createdAt','updatedAt','id_institucion','token']
             }
         ]
     });
@@ -51,15 +53,20 @@ const crearUsuario = async ( req, res = response ) => {
         //Encryptar contraseña
         const { persona_id } =  await Persona.create( req.body );
         
-        const salt = bcryt.genSaltSync();
+        const salt = bcrypt.genSaltSync();
+
+        //Generar JWT
+
+        const token = await generarJWT( persona_id, username );
         
-        passwordEncryt = bcryt.hashSync( password, salt );
+        passwordEncryt = bcrypt.hashSync( password, salt );
         
 
         await Usuario.create( { 
             persona_id, 
             username,
-            password:passwordEncryt 
+            password:passwordEncryt,
+            token 
         });
     
         res.status( 201 ).json({
@@ -132,25 +139,79 @@ const DeleteUsuario = async ( req, res = response ) => {
 
 
 
-const loginUsuario = ( req, res = response ) => {
+const loginUsuario = async ( req, res = response ) => {
 
-    const { email, password } = ( req.body );
-
-    res.json({
-        ok:true,
-        msg:'login',
-        email,
-        password
+    const { username, password } = req.body;
+    
+    const personaUsername =  await Usuario.findOne({ 
+        where:{ username : username }
     });
+
+    try {
+
+        if ( !personaUsername ) {
+            return res.status( 400 ).json({
+                ok:false,
+                msg:"El usuario no existe con ese username"
+
+            });
+        }
+
+        const validPassword = bcrypt.compareSync( password, personaUsername.password );
+
+        if ( !validPassword ) {
+            
+            return res.status( 400 ).json({
+                ok:false,
+                msg:'Password incorrecto'
+            });
+
+        }
+
+        //Generar JWT
+
+        const token = await generarJWT( personaUsername.persona_id, username );
+
+        
+        res.status(201).json({
+            ok: true,
+            uid: personaUsername.persona_id,
+            username: personaUsername.username,
+            token 
+        });
+
+
+
+
+    } catch (error) {
+       
+        console.log(error);
+        res.status(500).json({
+          ok:true,
+          msg:'Por favor hable con el Administrador',
+      });
+    
+
+    }
 
 };
 
-const revalidarToken = ( req, res ) => { 
+const revalidarToken = async( req, res = response ) => {
+
+    const { uid, name }  = req;
+
+    //generar un nuevo JWT y retornar en esta petición
+
+    //Generar JWT
+
+    const token = await generarJWT( uid, name );
 
     res.json({
         ok:true,
-        msg: 'renew'
-    })
+        uid,
+        name,
+        token
+    });
 };
 
 
@@ -162,5 +223,6 @@ module.exports = {
     verUsuario,
     modificarUsuario,
     modificarUser,
-    DeleteUsuario
+    DeleteUsuario,
+    revalidarToken
 }

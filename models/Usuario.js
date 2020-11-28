@@ -13,10 +13,14 @@ const UsuarioModel = ( sequelize ) => {
             allowNull: false,
         },
         password: {
-            type: DataTypes.STRING(30),
+            type: DataTypes.TEXT,
             allowNull: false,
         },
-        last_session: DataTypes.DATE
+        last_session: DataTypes.DATE,
+        token: {
+            type: DataTypes.TEXT,
+            allowNull: false,
+        },
 
     });
 

@@ -1,4 +1,6 @@
 const express = require('express');
+var cors = require('cors');
+
 require('dotenv').config();
 require('./database/config');
 
@@ -8,16 +10,16 @@ require('./database/config');
 
 
 // crear el servidor de express
-
-
 const app = express();
 
-//BASE DE DATOS
 
-
+// Cors
+app.use(cors());
 
 //Directorio Público
 app.use( express.static('public') );
+
+
 
 //Lectura y parseo del body
 
@@ -25,6 +27,8 @@ app.use( express.json() );
 
 //Rutas
 app.use('/api/auth',             require('./routes/auth'));
+app.use('/api/users',            require('./routes/users'));
+
 app.use('/api/categoria',        require('./routes/categoria'));
 app.use('/api/test-simple',      require('./routes/testSimple'));
 app.use('/api/pregunta-simple',  require('./routes/preguntaSimple'));
@@ -34,7 +38,7 @@ app.use('/api/institutos',       require('./routes/institutos'));
 app.use('/api/test-formas',      require('./routes/testFormas'));
 app.use('/api/pregunta-formas',  require('./routes/preguntaFormas'));
 app.use('/api/respuesta-formas',  require('./routes/respuestaFormas'));
-app.use('/api/users',            require('./routes/users'));
+
 
 //TODO CRUD : Eventos
 

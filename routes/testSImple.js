@@ -6,9 +6,14 @@
 const { Router }        = require( 'express' );
 const { check }         = require( 'express-validator' );
 const { validarCampos } = require( '../middlewares/validar-campos' );
+const { validarJWT } = require('../middlewares/validar-jwt.js');
+
 const router = Router();
 
 const { mostrarTestSimple, crearTestSimple, updateTestSimple, DeleteTestSimple } = require('../controllers/testSimple');
+
+// Todos tienen que pasar por la validación del JWT
+router.use( validarJWT );
 
 router.get( '/testsimples',
     mostrarTestSimple
