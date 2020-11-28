@@ -31,6 +31,9 @@ app.use('/api/pregunta-simple',  require('./routes/preguntaSimple'));
 app.use('/api/respuesta-simple', require('./routes/respuestaSimple'));
 app.use('/api/test-disponibles', require('./routes/testDisponibles'));
 app.use('/api/institutos',       require('./routes/institutos'));
+app.use('/api/test-formas',      require('./routes/testFormas'));
+app.use('/api/pregunta-formas',  require('./routes/preguntaFormas'));
+app.use('/api/respuesta-formas',  require('./routes/respuestaFormas'));
 app.use('/api/users',            require('./routes/users'));
 
 //TODO CRUD : Eventos
