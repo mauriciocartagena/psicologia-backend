@@ -11,12 +11,21 @@ const { validarJWT } = require('../middlewares/validar-jwt.js');
 const router = Router();
 
 
-const { crearUsuario, verUsuario, modificarUsuario, DeleteUsuario, modificarUser } = require('../controllers/auth');
+const { crearUsuario, verUsuario, modificarUsuario, DeleteUsuario, modificarUser, verOneUsuario } = require('../controllers/auth');
 
 // Todos tienen que pasar por la validación del JWT
 router.use( validarJWT );
 
 router.get('/usuarios', verUsuario);
+
+router.get(
+    '/usuario',
+    [
+        check('persona_id','La persona es requerida').not().isEmpty(),
+        validarCampos
+    ], 
+    verOneUsuario
+);
 
 router.post(
     '/new',

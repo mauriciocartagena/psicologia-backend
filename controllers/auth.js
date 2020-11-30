@@ -22,6 +22,37 @@ const verUsuario = async ( req, res = response ) => {
     });
 };
 
+const verOneUsuario = async ( req, res = response ) => { 
+
+    const { persona_id  } = req.body;
+    
+    const persona =  await Persona.findOne({
+        where:{ persona_id: persona_id},
+                include: [
+                { model: Usuario, as: 'usuarios',
+                    attributes:['username','last_session','createdAt','updatedAt','id_institucion','token']
+                }
+            ]
+    });
+    try {
+        res.status( 201 ).json({
+            ok:true,
+            msg: 'lista de usuario',
+            persona:  persona
+        });
+        
+    } catch (error) {
+        console.log( error )
+        res.status( 400 ).json({
+            ok:false,
+            msg:'Por favor hable con el Administrador',
+            personas:  persona
+        });
+    }
+
+
+};
+
 const crearUsuario = async ( req, res = response ) => { 
 
     
@@ -216,11 +247,12 @@ const revalidarToken = async( req, res = response ) => {
 
 
 module.exports = {
+    verUsuario,
+    verOneUsuario,
     crearUsuario,
     loginUsuario,
     revalidarToken,
     crearUsuario,
-    verUsuario,
     modificarUsuario,
     modificarUser,
     DeleteUsuario,
