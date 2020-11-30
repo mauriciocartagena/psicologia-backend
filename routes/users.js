@@ -18,7 +18,7 @@ router.use( validarJWT );
 
 router.get('/usuarios', verUsuario);
 
-router.get(
+router.post(
     '/usuario',
     [
         check('persona_id','La persona es requerida').not().isEmpty(),
