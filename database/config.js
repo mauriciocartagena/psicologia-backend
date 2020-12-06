@@ -104,7 +104,7 @@ Persona.hasMany( Usuario, {
 
 
 
-sequelize.sync({ force: true }).then(() => {
+sequelize.sync({ force: false }).then(() => {
     console.log("Drop and re-sync db.");
 });
 
