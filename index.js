@@ -31,6 +31,7 @@ app.use('/api/users',             require('./routes/users'));
  
 app.use('/api/categoria',         require('./routes/categoria'));
 app.use('/api/test-simple',       require('./routes/testSimple'));
+
 app.use('/api/pregunta-simple',   require('./routes/preguntaSimple'));
 app.use('/api/respuesta-simple',  require('./routes/respuestaSimple'));
 app.use('/api/test-disponibles',  require('./routes/testDisponibles'));
