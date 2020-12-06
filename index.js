@@ -26,17 +26,17 @@ app.use( express.static('public') );
 app.use( express.json() );
 
 //Rutas
-app.use('/api/auth',             require('./routes/auth'));
-app.use('/api/users',            require('./routes/users'));
-
-app.use('/api/categoria',        require('./routes/categoria'));
-app.use('/api/test-simple',      require('./routes/testSimple'));
-app.use('/api/pregunta-simple',  require('./routes/preguntaSimple'));
-app.use('/api/respuesta-simple', require('./routes/respuestaSimple'));
-app.use('/api/test-disponibles', require('./routes/testDisponibles'));
-app.use('/api/institutos',       require('./routes/institutos'));
-app.use('/api/test-formas',      require('./routes/testFormas'));
-app.use('/api/pregunta-formas',  require('./routes/preguntaFormas'));
+app.use('/api/auth',              require('./routes/auth'));
+app.use('/api/users',             require('./routes/users'));
+ 
+app.use('/api/categoria',         require('./routes/categoria'));
+app.use('/api/test-simple',       require('./routes/testSimple'));
+app.use('/api/pregunta-simple',   require('./routes/preguntaSimple'));
+app.use('/api/respuesta-simple',  require('./routes/respuestaSimple'));
+app.use('/api/test-disponibles',  require('./routes/testDisponibles'));
+app.use('/api/institutos',        require('./routes/institutos'));
+app.use('/api/test-formas',       require('./routes/testFormas'));
+app.use('/api/pregunta-formas',   require('./routes/preguntaFormas'));
 app.use('/api/respuesta-formas',  require('./routes/respuestaFormas'));
 
 
