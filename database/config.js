@@ -24,7 +24,7 @@ const sequelize = new Sequelize(
         host        : process.env.DB_CNN,
         port        : process.env.DB_PORT,
         dialect     : process.env.DB_DIALECT,
-        socketPath: "/Applications/MAMP/tmp/mysql/mysql.sock"   
+        // socketPath: "/Applications/MAMP/tmp/mysql/mysql.sock"   
     }
 );
 
