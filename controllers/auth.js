@@ -131,21 +131,49 @@ const modificarUsuario = async ( req, res = response ) => {
     });
    
 };
-const modificarUser = async ( req, res = response ) => { 
-
-    await Usuario.update( req.body ,{
-        where:{ persona_id: req.body.persona_id }
-    }).then( ()=> { 
-        res.status( 200 ).json({
-            ok:true,
-            msg: 'update',
-        });
-    }).catch(()=> {
-        res.status( 400 ).json({
-            ok:true,
-            msg: 'error update',
-        });
+const modificarUser = async ( req, res = response ) => {
+    
+    const { username } = req.body;
+    
+    const personaUsername =  await Usuario.findOne({ 
+        where:{ username : username }
     });
+    
+    try {
+        
+        if ( personaUsername ) {
+            
+            return res.status( 400 ).json({
+                ok:false,
+                msg:'El usuario ya existe'
+            });
+            
+        }
+        await Usuario.update( req.body ,{
+            where:{ persona_id: req.body.persona_id }
+        }).then( ()=> { 
+            res.status( 200 ).json({
+                ok:true,
+                msg: 'update',
+            });
+        }).catch(()=> {
+            res.status( 400 ).json({
+                ok:true,
+                msg: 'error update',
+            });
+        });
+
+    }catch(error){
+
+        console.log(error);
+        res.status(201).json({
+            ok:true,
+            msg:'Por favor hable con el Administrador',
+        });
+
+    }
+
+    
    
 };
 
