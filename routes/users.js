@@ -59,7 +59,6 @@ router.put(
             '/update-user',
             [// middlewares
                 check( 'persona_id', 'La persona es requerida' ).not().isEmpty(),
-                check( 'password', 'El password es requerida' ).isLength({ min: 6 }),
                 validarCampos
             ],
             modificarUser );
