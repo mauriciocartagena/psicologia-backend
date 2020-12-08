@@ -66,6 +66,8 @@ router.put(
     '/update-userp',
     [// middlewares
         check( 'persona_id', 'La persona es requerida' ).not().isEmpty(),
+        check( 'passwordCurrent', 'La contraseña es requerida' ).isLength({ min: 6 }),
+        check( 'passwordNew', 'La contraseña nueva es requerida' ).isLength({ min: 6 }),
         validarCampos
     ],
     modificarPassword );
