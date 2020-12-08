@@ -178,9 +178,32 @@ const modificarUser = async ( req, res = response ) => {
 };
 const modificarPassword = async ( req, res = response ) => {
 
+    const { persona_id  } = req.body;
+
+    const persona =  await Persona.findOne({
+        where:{ persona_id: persona_id},
+            include: [
+            { model: Usuario, as: 'usuarios',
+                attributes:['password']
+            }
+        ]
+    });
     try {
+
+        const salt = bcrypt.genSaltSync();
         
-        await Usuario.update( req.body ,{
+        passwordEncryt = bcrypt.hashSync( req.body.passwordCurrent, salt );
+
+        if( persona.usuarios.password !==  passwordEncryt ){
+            return res.status( 400 ).json({
+                ok:false,
+                msg:'La contraseña es incorrecta'
+            });
+        }
+        
+        passwordEncrytNew = bcrypt.hashSync( req.body.passwordNew, salt );
+
+        await Usuario.update( passwordEncrytNew ,{
             where:{ persona_id: req.body.persona_id }
         }).then( ()=> { 
             res.status( 200 ).json({
