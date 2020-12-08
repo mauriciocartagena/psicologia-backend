@@ -188,7 +188,7 @@ const modificarPassword = async ( req, res = response ) => {
 
         const salt = bcrypt.genSaltSync();
         
-        const validPassword = bcrypt.compareSync( passwordCurrent, personaUsername.password );
+        const validPassword = bcrypt.compareSync( req.body.passwordCurrent, personaUsername.password );
 
         if ( !validPassword ) {
             
