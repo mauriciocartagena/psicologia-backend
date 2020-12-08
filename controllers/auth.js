@@ -176,6 +176,37 @@ const modificarUser = async ( req, res = response ) => {
     
    
 };
+const modificarPassword = async ( req, res = response ) => {
+
+    try {
+        
+        await Usuario.update( req.body ,{
+            where:{ persona_id: req.body.persona_id }
+        }).then( ()=> { 
+            res.status( 200 ).json({
+                ok:true,
+                msg: 'update',
+            });
+        }).catch(()=> {
+            res.status( 400 ).json({
+                ok:true,
+                msg: 'error update',
+            });
+        });
+
+    }catch(error){
+
+        console.log(error);
+        res.status(201).json({
+            ok:true,
+            msg:'Por favor hable con el Administrador',
+        });
+
+    }
+
+    
+   
+};
 
 const DeleteUsuario = async ( req, res = response ) => { 
 
@@ -283,6 +314,7 @@ module.exports = {
     crearUsuario,
     modificarUsuario,
     modificarUser,
+    modificarPassword,
     DeleteUsuario,
-    revalidarToken
+    revalidarToken,
 }

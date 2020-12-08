@@ -11,7 +11,7 @@ const { validarJWT } = require('../middlewares/validar-jwt.js');
 const router = Router();
 
 
-const { crearUsuario, verUsuario, modificarUsuario, DeleteUsuario, modificarUser, verOneUsuario } = require('../controllers/auth');
+const { crearUsuario, verUsuario, modificarUsuario, DeleteUsuario, modificarUser, verOneUsuario, modificarPassword } = require('../controllers/auth');
 
 // Todos tienen que pasar por la validación del JWT
 router.use( validarJWT );
@@ -62,6 +62,13 @@ router.put(
                 validarCampos
             ],
             modificarUser );
+router.put(
+    '/update-userp',
+    [// middlewares
+        check( 'persona_id', 'La persona es requerida' ).not().isEmpty(),
+        validarCampos
+    ],
+    modificarPassword );
 
 router.delete(
     '/delete',
