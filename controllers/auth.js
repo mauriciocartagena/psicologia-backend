@@ -201,7 +201,7 @@ const modificarPassword = async ( req, res = response ) => {
         
         passwordEncrytNew = bcrypt.hashSync( req.body.passwordNew, salt );
 
-        await Usuario.update( passwordEncrytNew ,{
+        await Usuario.update( { password:passwordEncrytNew } ,{
             where:{ persona_id: req.body.persona_id }
         }).then( ()=> { 
             res.status( 200 ).json({
