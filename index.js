@@ -1,4 +1,5 @@
 const express = require('express');
+var bodyParser = require('body-parser');
 var cors = require('cors');
 
 require('dotenv').config();
@@ -12,6 +13,15 @@ require('./database/config');
 // crear el servidor de express
 const app = express();
 
+app.use(bodyParser.urlencoded({
+    limit: '5mb',
+    parameterLimit: 100000,
+    extended: false 
+}));
+
+app.use(bodyParser.json({
+    limit: '5mb'
+}));
 
 // Cors
 app.use(cors());
