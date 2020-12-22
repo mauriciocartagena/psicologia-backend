@@ -15,7 +15,7 @@ const app = express();
 
 app.use(bodyParser.urlencoded({
     limit: '50mb',
-    parameterLimit: 100000,
+    // parameterLimit: 100000,
     extended: false 
 }));
 
