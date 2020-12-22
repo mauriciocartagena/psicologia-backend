@@ -13,16 +13,6 @@ require('./database/config');
 // crear el servidor de express
 const app = express();
 
-app.use(bodyParser.urlencoded({
-    limit: '5mb',
-    parameterLimit: 100000,
-    extended: false 
-}));
-
-app.use(bodyParser.json({
-    limit: '5mb'
-}));
-
 // Cors
 app.use(cors());
 
@@ -34,6 +24,16 @@ app.use( express.static('public') );
 //Lectura y parseo del body
 
 app.use( express.json() );
+
+app.use(bodyParser.urlencoded({
+    limit: '5mb',
+    parameterLimit: 100000,
+    extended: false 
+}));
+
+app.use(bodyParser.json({
+    limit: '5mb'
+}));
 
 //Rutas
 app.use('/api/auth',              require('./routes/auth'));
