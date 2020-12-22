@@ -14,13 +14,13 @@ require('./database/config');
 const app = express();
 
 app.use(bodyParser.urlencoded({
-    limit: '50mb',
-    // parameterLimit: 100000,
+    limit: '5mb',
+    parameterLimit: 100000,
     extended: false 
 }));
 
 app.use(bodyParser.json({
-    limit: '50mb'
+    limit: '5mb'
 }));
 
 // Cors
