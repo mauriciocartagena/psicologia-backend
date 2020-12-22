@@ -16,24 +16,22 @@ const app = express();
 // Cors
 app.use(cors());
 
-//Directorio Público
-app.use( express.static('public') );
-
-
-
-//Lectura y parseo del body
-
-app.use( express.json() );
-
 app.use(bodyParser.urlencoded({
-    limit: '5mb',
+    limit: '50mb',
     parameterLimit: 100000,
     extended: false 
 }));
 
 app.use(bodyParser.json({
-    limit: '5mb'
+    limit: '50mb'
 }));
+
+//Directorio Público
+app.use( express.static('public') );
+
+//Lectura y parseo del body
+
+app.use( express.json() );
 
 //Rutas
 app.use('/api/auth',              require('./routes/auth'));
