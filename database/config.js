@@ -15,8 +15,6 @@ const { RespuestasFormasModel } = require("../models/RespuestasFormas");
 const { TestDisponiblesModel } = require("../models/TestDisponibles");
 const { InstitucionModel } = require("../models/Institucion");
 
-
-
 const sequelize = new Sequelize(
     process.env.DB_DATABASE,
     process.env.DB_USER, 
@@ -27,6 +25,18 @@ const sequelize = new Sequelize(
         // socketPath: "/Applications/MAMP/tmp/mysql/mysql.sock"   
     }
 );
+
+async function CheckConnection(){
+    try {
+        await sequelize.authenticate();
+        console.log('Connection has been established successfully.');
+    } catch (error) {
+        console.error('Unable to connect to the database:', error);
+    }
+
+
+}
+CheckConnection();
 
 // persona-usuario
 const Persona = PersonaModel( sequelize );
