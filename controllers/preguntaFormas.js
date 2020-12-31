@@ -1,16 +1,53 @@
 
 const { response } = require('express');
-const { PreguntasFormas } = require('../database/config');
+const { PreguntasFormas, TestFormas } = require('../database/config');
 
 const mostrarPreguntaForma = async ( req, res = response ) => { 
 
-    const preguntaFormas = await PreguntasFormas.findAll();
+    const preguntaFormas = await PreguntasFormas.findAll({
+        include: [
+            { model: TestFormas, as: 'test_formas',
+              attributes:['nombre']
+            }
+        ]
+    });
  
      res.status( 200 ).json({
          ok:true,
          msg: 'lista de preguntas formas',
          preguntaFormas
      });
+};
+const mostrarPreguntaOneForma = async ( req, res = response ) => { 
+
+    const { id_pregunta  } = req.body;
+
+    const preguntaFormas = await PreguntasFormas.findOne({
+        where:{ id_pregunta: id_pregunta},
+            include: [
+                { model: TestFormas, as: 'test_formas',
+                attributes:['nombre']
+                }
+            ]
+    });
+     try {
+        res.status( 200 ).json({
+            ok:true,
+            msg: 'lista de preguntas formas',
+            preguntaFormas
+        });   
+         
+     } catch (error) {
+         console.log( error )
+         res.status( 400 ).json({
+             ok:false,
+             msg:'Por favor hable con el Administrador'
+         });
+     }
+ 
+
+
+
 };
 
 const crearPreguntaForma = async ( req, res = response ) => { 
@@ -94,5 +131,6 @@ module.exports = {
     mostrarPreguntaForma,
     crearPreguntaForma,
     updatePreguntaForma,
-    deletePreguntaForma
+    deletePreguntaForma,
+    mostrarPreguntaOneForma
 }
