@@ -4,7 +4,12 @@ const { PreguntasFormas, TestFormas } = require('../database/config');
 
 const mostrarPreguntaForma = async ( req, res = response ) => { 
 
+    const limit = parseInt( req.query.limit ); // Asegúrate de parsear el límite a número
+    const skip  = parseInt( req.query.skip );
+
     const preguntaFormas = await PreguntasFormas.findAll({
+        limit: limit,
+        offset: skip,
         include: [
             { model: TestFormas, as: 'test_formas',
               attributes:['nombre']
