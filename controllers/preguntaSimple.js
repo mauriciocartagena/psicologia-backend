@@ -1,7 +1,7 @@
 
 
-const { response }        = require('express');
-const { PreguntaSimple }  = require('../database/config');
+const { response } = require('express');
+const { PreguntaSimple, Categoria, TestSimple }  = require('../database/config');
 
 const mostrarPreguntaSimple = async ( req, res = response  ) => {
     const limit = parseInt( req.query.limit ); // Asegúrate de parsear el límite a número
@@ -9,7 +9,15 @@ const mostrarPreguntaSimple = async ( req, res = response  ) => {
 
     const preguntaSimple = await PreguntaSimple.findAll({
         limit: limit,
-        offset: skip
+        offset: skip,
+        include: [
+            { model: Categoria, as: 'categorias',
+              attributes:['nombre_categoria']
+            },
+            { model: TestSimple, as: 'test_simples',
+                attributes:['nombre_test']
+            }
+        ]
     });
 
     res.status( 200 ).json({
