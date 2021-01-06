@@ -4,8 +4,13 @@ const { response }        = require('express');
 const { PreguntaSimple }  = require('../database/config');
 
 const mostrarPreguntaSimple = async ( req, res = response  ) => {
+    const limit = parseInt( req.query.limit ); // Asegúrate de parsear el límite a número
+    const skip  = parseInt( req.query.skip );
 
-    const preguntaSimple = await PreguntaSimple.findAll();
+    const preguntaSimple = await PreguntaSimple.findAll({
+        limit: limit,
+        offset: skip
+    });
 
     res.status( 200 ).json({
         ok:true,
