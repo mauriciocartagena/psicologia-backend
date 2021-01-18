@@ -1,5 +1,4 @@
 const { response } = require( 'express' );
-const { body } = require('express-validator');
 const { TestSimple } = require('../database/config');
 
 const mostrarTestSimple = async( req, res = response ) => {
@@ -7,7 +6,6 @@ const mostrarTestSimple = async( req, res = response ) => {
     const testSimple = await TestSimple.findAll();
 
     res.status( 200 ) .json({
-
         ok:true,
         msg:'Lista de Test Simple',
         testSimple: testSimple

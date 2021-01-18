@@ -4,7 +4,7 @@ const { response } = require('express');
 const { PreguntaSimple, Categoria, TestSimple }  = require('../database/config');
 
 const mostrarPreguntaSimple = async ( req, res = response  ) => {
-    const limit = parseInt( req.query.limit ); // Asegúrate de parsear el límite a número
+    const limit = parseInt( req.query.limit ); 
     const skip  = parseInt( req.query.skip );
 
     const preguntaSimple = await PreguntaSimple.findAll({
@@ -23,6 +23,21 @@ const mostrarPreguntaSimple = async ( req, res = response  ) => {
     res.status( 200 ).json({
         ok:true,
         msg:"Lista de preguntas simples",
+        simples_preguntas:preguntaSimple
+    });
+
+}
+
+
+const mostrarPreguntaSimpleTest = async ( req, res = response  ) => {
+
+    const preguntaSimple = await PreguntaSimple.findAll({
+        where:{ id_test: req.query.id_test }
+    });
+
+    res.status( 200 ).json({
+        ok:true,
+        msg:"Lista de preguntas de la prueba",
         simples_preguntas:preguntaSimple
     });
 
@@ -105,6 +120,7 @@ const deletePreguntaSimple = async ( req, res = response  ) => {
 
 module.exports = {
     mostrarPreguntaSimple,
+    mostrarPreguntaSimpleTest,
     crearPreguntaSimple,
     updatePreguntaSimple,
     deletePreguntaSimple
