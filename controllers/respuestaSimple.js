@@ -26,7 +26,13 @@ const crearRespuestaSimple = async ( req, res = response ) => {
                 ok:true,
                 msg: 'register'
             });
-        }   
+        } 
+        else {
+            res.status( 400 ).json({
+                ok:false,
+                msg: 'Las pregunta ya fue registrada'
+            });
+        }  
 
     } catch (error) {
         res.status(201).json({
