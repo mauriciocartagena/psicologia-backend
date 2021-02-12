@@ -13,15 +13,20 @@ const mostrarRespuestaSimple = async ( req, res = response ) => {
 };
 
 const crearRespuestaSimple = async ( req, res = response ) => { 
-        
+    
+    const respuestaSimple =  await RespuestaSimple.findOne({ 
+        where:{ id_pregunta : req.body.id_pregunta }
+    });
+
     try {
-            
-        await RespuestaSimple.create( req.body );
-            
-        res.status( 200 ).json({
-            ok:true,
-            msg: 'register'
-        });
+        
+        if ( !respuestaSimple ) {
+            await RespuestaSimple.create( req.body ),
+            res.status( 200 ).json({
+                ok:true,
+                msg: 'register'
+            });
+        }   
 
     } catch (error) {
         res.status(201).json({
