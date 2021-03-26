@@ -10,12 +10,19 @@ const { validarJWT } = require('../middlewares/validar-jwt.js');
 
 const router = Router();
 
-const { mostrarTestFormas, crearTestFormas, updateTestFormas, deleteTestFormas } = require('../controllers/testFormas');
+const { mostrarTestFormas, crearTestFormas, updateTestFormas, deleteTestFormas, mostrarTestFormasPregunta } = require('../controllers/testFormas');
 
 // Todos tienen que pasar por la validación del JWT
 router.use( validarJWT );
 
 router.get('/tformas', mostrarTestFormas);
+
+router.post('/tformas/answers',
+    [ 
+        check('id_test',"El test es requerido").not().isEmpty(),
+        validarCampos
+    ],
+    mostrarTestFormasPregunta);
 
 router.post('/new',
     [

@@ -1,6 +1,6 @@
 
 const { response } = require('express');
-const { TestFormas } = require('../database/config');
+const { TestFormas, PreguntasFormas } = require('../database/config');
 
 
 const mostrarTestFormas = async ( req, res = response ) => { 
@@ -14,6 +14,36 @@ const mostrarTestFormas = async ( req, res = response ) => {
      });
 };
 
+
+const mostrarTestFormasPregunta = async ( req, res = response ) => {
+
+    const { id_test  } = req.body;
+
+    const limit = parseInt( req.body.limit ); 
+    const skip  = parseInt( req.body.skip );
+
+
+    const preguntaFormas = await PreguntasFormas.findAll({
+        where:{ id_test: id_test },
+        limit: limit,
+        offset: skip
+    });
+
+     try {
+        res.status( 200 ).json({
+            ok:true,
+            msg: 'lista de preguntas formas',
+            preguntaFormas
+        });   
+         
+     } catch (error) {
+         console.log( error )
+         res.status( 400 ).json({
+             ok:false,
+             msg:'Por favor hable con el Administrador'
+         });
+     }
+}
 const crearTestFormas = async ( req, res = response ) => { 
     
     const name = await TestFormas.findOne({
@@ -93,6 +123,7 @@ const deleteTestFormas = async ( req, res = response ) => {
 
 module.exports = {
     mostrarTestFormas,
+    mostrarTestFormasPregunta,
     crearTestFormas,
     updateTestFormas,
     deleteTestFormas
