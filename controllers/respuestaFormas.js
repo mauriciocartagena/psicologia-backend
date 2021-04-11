@@ -15,10 +15,22 @@ const mostrarRespuestasFormas = async ( req, res = response ) => {
 };
 
 const crearRespuestasFormas = async ( req, res = response ) => { 
-    
+
+    const resp = await RespuestasFormas.findOne({
+        where:{ 
+            id_pregunta : req.body.id_pregunta,
+            persona_id  : req.body.persona_id
+        }
+    });
     
     try {
             
+        if ( resp ) {
+            return res.status( 400 ).json({
+                ok:false,
+                msg: 'La pregunta ya existe'
+           });
+        }
         await RespuestasFormas.create( req.body );
             
         res.status( 200 ).json({
